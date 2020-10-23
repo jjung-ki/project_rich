@@ -33,9 +33,13 @@ function reducer(state, action){
   switch(action.type){
     case 'CREATE':
       return {inputs: initialState.inputs,
-      users:state.users.concat(action.user)}
+      users:[...state.users, action.user]}
     case 'CHANGE':
       return {...state, inputs:{...state.inputs,[action.name]:action.value}}
+    case 'REMOVE':
+      return {...state, users:state.users.filter(user=> user.id !== action.id)}
+    case 'TOGGLE':
+      return {...state, users:state.users.map(user=> user.id === action.id ?{...user, active:!user.active} :user)}
     default:
       return state 
   }
@@ -77,15 +81,24 @@ const {users} = state
 
      }
    })
+  
   }
 
   const onRemove = (userId)=>{
+    dispatch({
+      type:"REMOVE",
+      id: userId
+    })
     //setUsers(users=>users.filter(user=>user.id !== userId))
   }
 
   const onToggle = (userId)=>{
     //setUsers(prevUser=>prevUser.map(user=> user.id === userId ? {...user, active:!user.active}:user)
     //)
+    dispatch({
+      type:"TOGGLE",
+      id: userId
+    })
   }
   return (
    <>
