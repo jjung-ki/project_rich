@@ -5,12 +5,37 @@ import CreateUser from './components/CreateUser'
 import Counter from './components/Counter'
 import UserList from './components/UserList'
 
+const initialState = {
+  inputs : {
+    username : '',
+    email : ''
+  },
+  users : [{
+    id: 1,
+    username: 'velopert',
+    email: 'public.velopert@gmail.com',
+    active: true
+  },
+  {
+    id: 2,
+    username: 'tester',
+    email: 'tester@example.com',
+    active: false
+  },
+  {
+    id: 3,
+    username: 'liz',
+    email: 'liz@example.com',
+    active: false
+  }
+]}
 function reducer(state, action){
   switch(action.type){
     case 'CREATE':
-      return state.concat(action.user)
+      return {inputs: initialState.inputs,
+      users:state.users.concat(action.user)}
     case 'CHANGE':
-      return {...state.inputs,[action.name]:action.value}
+      return {...state, inputs:{...state.inputs,[action.name]:action.value}}
     default:
       return state 
   }
@@ -18,30 +43,7 @@ function reducer(state, action){
 function App() {
   // reducer 의 기본 틀을 만들기 위해서는 기존에 사용할  여러 state 값들을 객체 형태로 만들어서 만들어 주는게 좋다.
   // 따라서 내가 여러개의 state 값을 쓰기로 했다면 초기의 state 값이 될 여러 객체를 만들어 놓는게 좋다.
-  const initialState = {
-    inputs : {
-      username : '',
-      email : ''
-    },
-    users : [{
-      id: 1,
-      username: 'velopert',
-      email: 'public.velopert@gmail.com',
-      active: true
-    },
-    {
-      id: 2,
-      username: 'tester',
-      email: 'tester@example.com',
-      active: false
-    },
-    {
-      id: 3,
-      username: 'liz',
-      email: 'liz@example.com',
-      active: false
-    }
-  ]}
+ 
  
 
 
@@ -54,6 +56,7 @@ const {users} = state
 
   const onChange = (e)=>{
     const {name, value} = e.target
+    console.log(name, value)
     dispatch({
       type:"CHANGE",
       name,
@@ -62,7 +65,8 @@ const {users} = state
     }) 
   }
 
-  const onCreate = (e)=>{
+  const onCreate = ()=>{
+
    dispatch({
      type:'CREATE',
      user : {
