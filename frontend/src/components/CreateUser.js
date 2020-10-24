@@ -5,8 +5,8 @@ export default function CreateUser({username, email, onChance, onCreate}) {
 
     return (
         <div>
-            <input name="username" placeholder="account name" onChange={onChance} value={username}/>
-            <input name="email" placeholder="email" onChange={onChance} value={email}/>
+            <input name="username" placeholder="account name" onChange={e=>onChance(e)} value={username}/>
+            <input name="email" placeholder="email" onChange={e=>onChance(e)} value={email} />
             <button onClick={onCreate}>create</button>        
         </div>
     )
