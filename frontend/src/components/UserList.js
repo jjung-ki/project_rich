@@ -13,15 +13,14 @@ return(
         <button onClick={()=>onRemove(user.id)}>Delete</button>
     </div>
 )
-
 }
 export default function UserList({users, onRemove, onToggle}) {
    
     return (
         <div>
-            {users.map((user,index)=>{
+            {users.map(user=>{
                 return(
-                    <User key={index} user={user} onRemove={onRemove} onToggle={onToggle}/>
+                    <User user={user} onRemove={onRemove} onToggle={onToggle}/>
                 )
             })}
         </div>
